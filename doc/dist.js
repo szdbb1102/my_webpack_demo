@@ -2,7 +2,9 @@
   //require函数的本质是执行一个模块的代码，然后将相应变量挂载到exports对象上
   function require(module) {
     //localRequire的本质是拿到依赖包的exports变量
+    console.log(1)
     function localRequire(relativePath) {
+      console.log(2)
       return require(graph[module].dependencies[relativePath]);
     }
     var exports = {};
@@ -11,7 +13,7 @@
     })(localRequire, exports, graph[module].code);
     return exports; //函数返回指向局部变量，形成闭包，exports变量在函数执行后不会被摧毁
   }
-  require("../src/index.js");
+  require("./src/index.js");
 })({
   "./src/index.js": {
     dependencies: { "./message.js": "./src\\message.js" },
